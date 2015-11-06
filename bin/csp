@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'CP476A2/arc_reduce'
+require 'CP476A2/ac3'
+require 'CP476A2/csv_loader'
+
+def __main__
+  return -1 unless ARGV[0].to_s
+  csv_loader = CSVLoader.new
+  ac3 = AC3.new
+  file_name = ARGV[0].to_s
+  dir = Dir.pwd
+
+  matrix = csv_loader.load "#{dir}#{file_name}"
+  arcs = ac3.csp(matrix)
+  matrix, result = ac3.ac3(matrix, arcs)
+
+  puts matrix.to_s
+  puts result
+
+end
+
+__main__
