@@ -11,12 +11,13 @@ def __main__
   file_name = ARGV[0].to_s
   dir = Dir.pwd
 
-  matrix = csv_loader.load "#{dir}#{file_name}"
+  matrix = csv_loader.load "#{dir}/#{file_name}"
   arcs = ac3.csp(matrix)
-  matrix, result = ac3.ac3(matrix, arcs)
+  matrix, result, arc = ac3.ac3(matrix, arcs)
 
   puts matrix.to_s
   puts result
+  puts arc
 
 end
 

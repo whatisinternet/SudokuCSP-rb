@@ -6,7 +6,10 @@ class AC3
   def ac3(matrix, arcs)
 
     ar = ArcReduce.new
+    equal_arc = []
     while arcs.length > 0
+
+      puts "Queue length: #{arcs.length}"
 
       arc = arcs.shift
 
@@ -29,15 +32,17 @@ class AC3
         matrix[temp_cell[:y]][temp_cell[:x]] = temp_cell[:possible][0]
       end
 
-      unless temp_cell[:possible] == arc[:possible]
-        arcs.push arc
+      unless temp_cell == arc
+        arcs.push temp_cell
+      else
+        equal_arc.push temp_cell
       end
 
-      return matrix, false if !valid? arc
+      return matrix, false, equal_arc if !valid? arc
 
     end
 
-    return matrix, true
+    return matrix, true, equal_arc
 
   end
 
