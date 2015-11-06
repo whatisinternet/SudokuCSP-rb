@@ -25,7 +25,7 @@ class AC3
 
       temp_cell = ar.reject_three_by_three(matrix, temp_cell, arc[:x], arc[:y])
       unless temp_cell[:possible].length == arc[:possible].length
-        arcs = enqueue_neighbours_row(arcs, arc[:y])
+        arcs = enqueue_neighbours_inner_matrix(arcs, arc[:y], arc[:x])
       end
 
       if temp_cell[:possible].length == 1
