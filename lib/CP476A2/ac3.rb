@@ -9,7 +9,7 @@ class AC3
     equal_arc = []
     while arcs.length > 0
 
-      puts "Queue length: #{arcs.length}"
+      # puts "Queue length: #{arcs.length}"
 
       arc = arcs.shift
 
@@ -25,7 +25,7 @@ class AC3
 
       temp_cell = ar.reject_three_by_three(matrix, temp_cell, arc[:x], arc[:y])
       unless temp_cell[:possible].length == arc[:possible].length
-        arcs = enqueue_neighbours_inner_matrix(arcs, arc[:y], arc[:x])
+        arcs = enqueue_neighbours_inner_matrix(arcs, arc[:y])
       end
 
       if temp_cell[:possible].length == 1
@@ -38,13 +38,14 @@ class AC3
         equal_arc.push temp_cell
       end
 
-      return matrix, false, equal_arc if !valid? arc
+      return matrix, false, sort_equal_arc(equal_arc) if !valid? arc
 
     end
 
-    return matrix, true, equal_arc
+    return matrix, true, sort_equal_arc(equal_arc)
 
   end
+
 
   def valid?(cell)
     cell[:possible].length != 0
@@ -93,4 +94,8 @@ class AC3
     arc + sub_arc
   end
 
+  private
+    def sort_equal_arc(equal_arc)
+      equal_arc.sort{|a,b| a[:possible].length <=> b[:possible].length}
+    end
 end
