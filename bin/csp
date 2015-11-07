@@ -23,7 +23,7 @@ def __main__
 
   matrix, result = bts.solve(matrix)
 
-  puts matrix
+  puts matrix.to_s
 
 end
 

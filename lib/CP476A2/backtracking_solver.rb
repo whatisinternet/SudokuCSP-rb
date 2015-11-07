@@ -21,12 +21,14 @@ class BacktrackingSolver
       if solved?(matrix)
         return matrix
       end
-      if row == 9 || column == 9
+      if row == 8 && column == 8
         return matrix
       end
       ac3 = AC3.new
       arcs = ac3.csp(matrix)
+      origional_matrix = matrix.clone
       matrix, result, arc = ac3.ac3(matrix, arcs)
+      matrix = origional_matrix if result == false
       (1..9).each do |index|
         if matrix[row][column] == nil
           possible = {possible: [index], x: column, y: row}
@@ -39,13 +41,17 @@ class BacktrackingSolver
               helper(matrix, row, column + 1)
             end
           else
-            matrix[row][column] = nil
+            if column == 8
+              helper(matrix, row + 1, 0)
+            else
+              helper(matrix, row, column + 1)
+            end
           end
         else
           if column == 8
-            helper(matrix, row + 1, 0)
+            helper(origional_matrix, row + 1, column)
           else
-            helper(matrix, row, column + 1)
+            helper(origional_matrix, row, column + 1)
           end
         end
       end
