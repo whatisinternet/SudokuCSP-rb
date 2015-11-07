@@ -9,7 +9,7 @@ class AC3
     equal_arc = []
     while arcs.length > 0
 
-      # puts "Queue length: #{arcs.length}"
+      puts "Queue length: #{arcs.length}"
 
       arc = arcs.shift
 

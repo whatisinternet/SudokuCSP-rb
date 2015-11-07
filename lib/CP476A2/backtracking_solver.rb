@@ -4,7 +4,6 @@ class BacktrackingSolver
   end
 
   def solve(matrix)
-    old_matrix = matrix.clone
     ac3 = AC3.new
     arcs = ac3.csp(matrix)
     matrix, result, arc = ac3.ac3(matrix, arcs)
