@@ -20,7 +20,7 @@ class BacktrackingSolver
       if solved?(matrix)
         return matrix
       end
-      if row == 8 && column == 8
+      if row >= 8 && column >= 8
         return matrix
       end
       ac3 = AC3.new
