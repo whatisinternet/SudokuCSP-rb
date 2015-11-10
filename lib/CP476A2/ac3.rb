@@ -7,9 +7,10 @@ class AC3
 
     ar = ArcReduce.new
     equal_arc = []
+    arcs_store = []
     while arcs.length > 0
 
-      puts "Queue length: #{arcs.length}"
+      arcs_store.push arcs.length
 
       arc = arcs.shift
 
@@ -42,7 +43,7 @@ class AC3
 
     end
 
-    return matrix, true, sort_equal_arc(equal_arc)
+    return matrix, true, sort_equal_arc(equal_arc), arcs_store
 
   end
 

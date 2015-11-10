@@ -4,6 +4,18 @@ require 'CP476A2/backtracking_solver'
 require 'CP476A2/arc_reduce'
 require 'CP476A2/ac3'
 require 'CP476A2/csv_loader'
+require 'benchmark'
+
+def solved?(matrix)
+  matrix.each do |row|
+    row.each do |column|
+      if column == nil
+        return false
+      end
+    end
+  end
+  true
+end
 
 def __main__
   return -1 unless ARGV[0].to_s
@@ -13,17 +25,30 @@ def __main__
   file_name = ARGV[0].to_s
   dir = Dir.pwd
 
-  matrix = csv_loader.load "#{dir}/#{file_name}"
-  arcs = ac3.csp(matrix)
-  matrix, result, arc = ac3.ac3(matrix, arcs)
+  origional_matrix = csv_loader.load "#{dir}/#{file_name}"
+  arcs = ac3.csp(origional_matrix)
+  matrix, result, arc, arc_size = ac3.ac3(origional_matrix, arcs)
 
-  puts matrix.to_s
-  puts result
-  puts arc
+  puts "Largest queue: #{arc_size.sort.reverse[0]}"
+  puts "Queue at each iteration: #{arc_size.to_s}"
+  puts "Total Iterations: #{arc_size.length}"
+  puts "Matrix: #{matrix.to_s}" if solved?(matrix)
+  puts "Solvable? #{result}"
+  puts "Current Arcs: #{arc}"
 
-  matrix, result = bts.solve(matrix)
+  Benchmark.bm do |x|
+    x.report { ac3.csp(origional_matrix) }
+    x.report { ac3.ac3(origional_matrix, arcs) }
+  end
 
-  puts matrix.to_s
+
+  puts "Press enter to attempt to solve"
+  $stdin.gets
+  puts "Attempting to solve"
+  unless solved?(matrix)
+    matrix = bts.solve(matrix)
+    puts matrix.to_s
+  end
 
 end
 

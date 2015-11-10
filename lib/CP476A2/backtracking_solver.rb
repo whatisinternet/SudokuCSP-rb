@@ -6,52 +6,47 @@ class BacktrackingSolver
   def solve(matrix)
     ac3 = AC3.new
     arcs = ac3.csp(matrix)
-    matrix, result, arc = ac3.ac3(matrix, arcs)
+    matrix, result, arc, arc_size = ac3.ac3(matrix, arcs)
     if result
-      return helper(matrix, 0,0), result
+      return helper(matrix, 0,0)
     else
-      return matrix, result
+      return matrix
     end
   end
 
 
   private
     def helper(matrix, row, column)
-      if solved?(matrix)
-        return matrix
-      end
-      if row >= 8 && column >= 8
-        return matrix
-      end
-      ac3 = AC3.new
-      arcs = ac3.csp(matrix)
-      origional_matrix = matrix.clone
-      matrix, result, arc = ac3.ac3(matrix, arcs)
-      matrix = origional_matrix if result == false
-      (1..9).each do |index|
-        if matrix[row][column] == nil
-          possible = {possible: [index], x: column, y: row}
-          arc = reduce_arc(matrix, possible)
-          if arc[:possible].length > 0
-            matrix[row][column] = index
-            if column == 8
-              helper(matrix, row + 1, 0)
+      return matrix if solved?(matrix)
+      return matrix if row == 9 || column == 9
+      if matrix[row][column] == nil
+        ac3 = AC3.new
+        arcs = ac3.csp(matrix)
+        matrix, result, arc, arc_size = ac3.ac3(matrix, arcs)
+        return matrix if solved?(matrix)
+        (1..9).each do |index|
+            possible = {possible: [index], x: column, y: row}
+            arc_possible = reduce_arc(matrix, possible)
+            if arc_possible[:possible].length > 0
+              matrix[row][column] = index
+              if column == 8
+                helper(matrix, row + 1, 0)
+              else
+                helper(matrix, row, column + 1)
+              end
             else
-              helper(matrix, row, column + 1)
+              if column == 8
+                helper(matrix, row + 1, 0)
+              else
+                helper(matrix, row, column + 1)
+              end
             end
-          else
-            if column == 8
-              helper(matrix, row + 1, 0)
-            else
-              helper(matrix, row, column + 1)
-            end
-          end
+        end
+      else
+        if column == 8
+          helper(matrix, row + 1, 0)
         else
-          if column == 8
-            helper(origional_matrix, row + 1, column)
-          else
-            helper(origional_matrix, row, column + 1)
-          end
+          helper(matrix, row, column + 1)
         end
       end
       matrix
