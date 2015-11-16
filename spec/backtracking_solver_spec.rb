@@ -50,7 +50,7 @@ describe 'BacktrackingSolver' do
   describe 'solve' do
     it 'should have 0 nil values for solvable' do
       bts = BacktrackingSolver.new
-      solved, solvable = bts.solve(@solvable)
+      solved= bts.solve(@solvable)
 
       solved.each do |row|
         row.each do |column|
