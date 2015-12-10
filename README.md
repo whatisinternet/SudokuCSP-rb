@@ -1,5 +1,7 @@
 # SudokuCSP
 
+Uses [Constraint Satisfaction](https://en.wikipedia.org/wiki/Constraint_satisfaction_problem) to partially solve Sudoku problem sets.
+
 ## Installation
 
 Add this line to your application's Gemfile:
