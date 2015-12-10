@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'CP476A2/version'
+require 'SudokuCSP/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "CP476A2"
-  spec.version       = CP476A2::VERSION
+  spec.name          = "SudokuCSP"
+  spec.version       = SudokuCSP::VERSION
   spec.authors       = ["Whatisinternet"]
   spec.email         = ["joshteeter@gmail.com"]
 
-  spec.summary       = %q{Assignment 2}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Sudoku CSP solver}
+  spec.homepage      = "https://githbub.com/whatisinternet/SudokuCSP-rb"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
